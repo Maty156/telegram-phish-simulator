@@ -3,8 +3,7 @@
 **DO NOT USE THIS CODE FOR ILLEGAL ACTIVITIES.**  
 This project is a **simulation** created exclusively for cybersecurity education, awareness, and authorized penetration testing in isolated lab environments.
 
-![Telegram Phishing Simulation Demo](https://via.placeholder.com/800x400?text=Phishing+Simulator+Demo)  
-*(Replace with a screenshot of your UI)*
+![Telegram Phishing Simulation Demo](/assets/screenshot-20260602-202756.png)  
 
 ---
 
