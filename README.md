@@ -161,29 +161,6 @@ npm install express
 
 All stolen data is also appended to `stolen_credentials.log` in the same folder.
 
----
-
-## 📡 Capturing Network Traffic (For Analysis)
-
-While the simulation runs, you can use network analysis tools to see exactly what data is exfiltrated.
-
-### Using Wireshark (on Victim VM)
-```bash
-sudo wireshark
-```
-Filter: `http.request.method == "POST"`  
-You will see the raw JSON payloads containing phone, code, and password.
-
-### Using Burp Suite (on Attacker VM)
-1. Set Burp proxy to listen on `0.0.0.0:8080`.
-2. Configure Victim VM’s browser to use `http://<attacker-ip>:8080`.
-3. Intercept and replay requests to understand the API.
-
-### Using Developer Tools (Simplest)
-On the Victim VM browser: Press `F12` → **Network** tab.  
-Every `fetch` call is recorded – you can inspect the exact data being sent.
-
----
 
 ## 🛡️ How to Defend Against This Attack
 
