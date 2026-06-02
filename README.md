@@ -1,231 +1,156 @@
 # ⚠️ Telegram Phishing Simulator – Educational Security Tool
 
-**DO NOT USE THIS CODE FOR ILLEGAL ACTIVITIES.**  
-This project is a **simulation** created exclusively for cybersecurity education, awareness, and authorized penetration testing in isolated lab environments.
+**DO NOT USE THIS CODE FOR ILLEGAL ACTIVITIES.**
+This repository is a simulation built for cybersecurity education, awareness, and authorized lab-based testing only.
 
-# Telegram phishing simulation demo
-![Telegram Phishing Simulation Demo](/assets/screenshot-20260602-202756.png)  
+![Telegram Phishing Simulation Demo](/assets/screenshot-20260602-202756.png)
 
 ---
 
 ## 📚 Table of Contents
-- [Purpose](#purpose)
-- [How the Attack Works](#how-the-attack-works)
-- [Repository Contents](#repository-contents)
-- [Setup in a Safe Lab](#setup-in-a-safe-lab)
-- [Step-by-Step Usage](#step-by-step-usage)
-- [Capturing Network Traffic](#capturing-network-traffic)
-- [How to Defend Against This Attack](#how-to-defend-against-this-attack)
-- [Legal & Ethical Warning](#legal--ethical-warning)
+- [About](#about)
+- [Contents](#contents)
+- [Safe Lab Setup](#safe-lab-setup)
+- [How to Run](#how-to-run)
+- [Simulated Attack Flow](#simulated-attack-flow)
+- [Defense Guidance](#defense-guidance)
+- [Ethical Use](#ethical-use)
 - [License](#license)
 
 ---
 
-## 🎯 Purpose
+## 🎯 About
 
-This repository demonstrates **how cybercriminals steal Telegram accounts** using fake "Free Premium" offers. By understanding the exact mechanics, you can:
+This project demonstrates a Telegram phishing simulation that is intended for:
+- cybersecurity training,
+- phishing awareness exercises,
+- defensive research,
+- authorized penetration testing in isolated environments.
 
-- Recognize phishing pages and social engineering tactics.
-- Test your own organization’s awareness (with permission).
-- Learn how to intercept and analyze malicious traffic.
-- Build defensive strategies (e.g., 2FA enforcement, user training).
+It shows how attackers can use fake “Free Premium” offers to harvest phone numbers, capture verification codes, and request 2FA passwords.
 
-**This is a teaching tool – not a weapon.**
-
----
-
-## 🧠 How the Attack Works (Step by Step)
-
-The attack mimics a real Telegram phishing kit. It has three stages:
-
-### Stage 1 – Phone Number Harvesting
-1. Victim clicks a link (e.g., “Get Free Telegram Premium”).
-2. A convincing page asks for the victim’s phone number.
-3. The attacker’s server receives the number (`POST /api/send-code`).
-
-### Stage 2 – Verification Code Interception
-1. The attacker uses the phone number to trigger a real Telegram SMS code (in our simulation, we **mock** this step).
-2. The victim is asked to enter the 6-digit code they received.
-3. The code is sent to the attacker (`POST /api/verify-code`).
-
-### Stage 3 – Two‑Factor Password Theft (if enabled)
-1. If the account has 2FA, the victim is asked for their password.
-2. The password is exfiltrated (`POST /api/verify-2fa`).
-3. The attacker now has full access: they can change the phone number, lock out the victim, and scam contacts.
-
-> **Our simulation uses a mock backend** – it never contacts Telegram’s real API. Credentials are only logged locally for educational observation.
+> This repository is not intended for real phishing or account takeover. It does not connect to Telegram’s live API.
 
 ---
 
-## 📁 Repository Contents
+## 📁 Contents
 
 | File | Description |
 |------|-------------|
-| `index.html` | The phishing interface (modern, animated, responsive). |
-| `server.js` | Mock backend that logs stolen data to console and a file. |
-| `package.json` | Node.js dependencies (Express). |
-| `README.md` | This file. |
-| `LICENSE` | Ethical use license (see below). |
-| `.gitignore` | Ignores `node_modules` and log files. |
+| `index.html` | Phishing page UI used for the simulation. |
+| `server.js` | Mock backend that logs submitted values locally. |
+| `package.json` | Node project metadata and dependencies. |
+| `README.md` | Project documentation. |
+| `LICENSE` | License and ethical usage terms. |
+| `.gitignore` | Files excluded from version control. |
 
 ---
 
-## 🛠️ Setup in a Safe Lab
+## 🧰 Safe Lab Setup
 
-To analyze this simulation without any risk, you **must** use an isolated virtual environment.
-
-### Requirements
-- [VirtualBox](https://www.virtualbox.org/) (free) or VMware.
-- Two VMs (both can be Linux – e.g., Ubuntu or Kali).
-- Internal network / host‑only network so VMs can talk but not the internet (optional).
-
-### Network Setup (Recommended)
-1. Create a **NAT Network** or **Host‑Only Network** in VirtualBox.
-2. Assign both VMs to that network.
-3. On the **Attacker VM** (will host the phishing page), note its IP (e.g., `192.168.100.10`).
-4. On the **Victim VM** (will browse the page), ensure it can reach that IP.
-
-### Installing Dependencies on Attacker VM
-```bash
-sudo apt update && sudo apt install -y nodejs npm
-git clone https://github.com/yourusername/telegram-phish-simulator.git
-cd telegram-phish-simulator
-npm install express
-
-```
-
-## 🛠️ Setup in a Safe Lab
-
-To analyze this simulation without any risk, you **must** use an isolated virtual environment.
+Use this tool only in a controlled environment.
 
 ### Requirements
-- [VirtualBox](https://www.virtualbox.org/) (free) or VMware.
-- Two VMs (both can be Linux – e.g., Ubuntu or Kali).
-- Internal network / host‑only network so VMs can talk but not the internet (optional).
+- Virtual machine software such as VirtualBox or VMware.
+- Two isolated VMs: one attacker host and one victim host.
+- A private network between the VMs.
+- No public deployment or live user interaction.
 
-### Network Setup (Recommended)
-1. Create a **NAT Network** or **Host‑Only Network** in VirtualBox.
-2. Assign both VMs to that network.
-3. On the **Attacker VM** (will host the phishing page), note its IP (e.g., `192.168.100.10`).
-4. On the **Victim VM** (will browse the page), ensure it can reach that IP.
-
-### Installing Dependencies on Attacker VM
+### Recommended installation
 
 ```bash
-
 sudo apt update && sudo apt install -y nodejs npm
+cd /home/youruser
 git clone https://github.com/yourusername/telegram-phish-simulator.git
 cd telegram-phish-simulator
-npm install express
-
+npm install
 ```
+
+### Network guidance
+- Use a host-only or NAT network so traffic stays inside your lab.
+- Confirm the victim VM can reach the attacker VM IP.
+- Do not expose the service to the public internet.
 
 ---
 
-## 🚀 Step-by-Step Usage
+## ⚡ Quick Start
 
-1. **Start the mock backend** on the Attacker VM:
+1. Install Node.js and npm on the attacker VM.
+2. Clone the repository and install dependencies.
+3. Start `server.js` on the attacker VM.
+4. Open the victim VM browser to `http://<attacker-ip>/`.
+5. Submit the test values and observe the output on the attacker VM.
+
+---
+
+## 🚀 How to Run
+
+1. Start the mock server on the attacker VM:
    ```bash
-   sudo node server.js
-   ```
-   You will see a welcome ASCII logo and:
-   ```
-   Server running on http://localhost:80
-   ```
-   *(Port 80 requires sudo; you can change to 3000 if needed)*
-
-2. **Access the phishing page** from the Victim VM’s browser:
-   ```
-   http://<attacker-ip>/
+   node server.js
    ```
 
-3. **Simulate a victim**:
-   - Enter any phone number (e.g., `+1234567890`).
-   - Click **“Get Code”**.
-   - On the Attacker VM’s terminal, you will see:
-     ```
-     [📞 PHONE] 1234567890 | Key: test_lab_123
-     ```
-   - Enter any 6‑digit code (e.g., `111111`).
-   - Terminal shows:
-     ```
-     [🔐 CODE] 1234567890 | Code: 111111
-     ```
-   - If the simulation is set to `needs_2fa: true` (default), you will be asked for a password.
-   - Enter any password.
-   - Terminal shows:
-     ```
-     [⚠️ PASSWORD] 1234567890 | PW: myfake
-     ```
-   - The page displays a success message and “redirects”.
+2. From the victim VM, open the phishing page in a browser:
+   ```text
+   http://\<attacker-ip\>/
+   ```
 
-All stolen data is also appended to `stolen_credentials.log` in the same folder.
+3. Use the page to submit a phone number, verification code, and optional password.
 
+4. Observe the logged output on the attacker VM and in `stolen_credentials.log`.
 
-## 🛡️ How to Defend Against This Attack
-
-Understanding the attack leads directly to defensive measures:
-
-1. **Enable Two‑Step Verification (2FA)** on Telegram.  
-   - Go to **Settings → Privacy and Security → Two-Step Verification**.  
-   - Set a strong password and a recovery email.  
-   - Even if an attacker gets your SMS code, they cannot log in without your 2FA password.
-
-2. **Never click “Free Premium” links** from untrusted sources.  
-   - Telegram Premium is **never free** via third‑party websites.
-
-3. **Check the URL** before entering credentials.  
-   - Real Telegram pages are on `web.telegram.org` or `t.me`.  
-   - Phishing domains often use misspellings like `te1egram.com`.
-
-4. **Use a password manager** – it will not auto‑fill on fake domains.
-
-5. **Monitor active sessions** in Telegram → Settings → Devices.  
-   - Terminate any unknown devices immediately.
-
-6. **Educate friends and family** about this exact phishing flow.
+> The server is a simulation and does not perform real Telegram authentication.
 
 ---
 
-## ⚖️ Legal & Ethical Warning
+## 🧠 Simulated Attack Flow
 
-**IMPORTANT – READ CAREFULLY**
+This simulator models the phishing phases used in credential capture:
 
-- This code is provided **solely for educational and authorized security testing**.
-- **Do not** deploy this simulation on any public website or use it against real users without explicit written permission.
-- **Do not** modify the code to connect to real Telegram APIs or to exfiltrate data to external servers.
-- **Do not** use this code to steal accounts, commit fraud, or violate any laws.
+1. Phone number harvesting
+   - The victim enters a phone number into the fake page.
+   - The number is posted to the attacker-controlled backend.
+2. Verification code interception
+   - The victim enters a 6-digit code.
+   - The code is posted to the mock backend.
+3. 2FA password capture
+   - If enabled, the victim is prompted for a password.
+   - The password is captured locally.
 
-**The author assumes no responsibility for any misuse of this code.**  
-By cloning, downloading, or using this repository, you agree that you will use it only in controlled environments (e.g., your own virtual machines) for learning purposes.
-
-If you are a security researcher, always obtain proper authorization before testing on any system you do not own.
-
----
-
-## 📜 License
-
-This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)** with an additional ethical use clause.
-
-- **You are free to** share, adapt, and use this code for **non‑commercial educational purposes**.
-- **You are NOT allowed to** use this code for any malicious, illegal, or commercial activity (including selling phishing‑as‑a‑service).
-- Any derivative work must include a clear warning and attribution to this repository.
-
-See the [LICENSE](LICENSE) file for full terms.
+The backend records all values to the terminal and `stolen_credentials.log`.
 
 ---
 
-## 🙏 Acknowledgements
+## 🛡️ Defense Guidance
 
-- Real phishing kits that inspired this educational reconstruction.
-- The cybersecurity community for promoting ethical learning.
-- You, for choosing to learn how to defend instead of attack.
+Protecting against this type of phishing includes:
+- Enabling Telegram two-step verification.
+- Avoiding unsolicited “free premium” offers.
+- Verifying URLs before entering credentials.
+- Using password managers to prevent autofill on fake sites.
+- Monitoring active Telegram sessions and terminating unknown devices.
+- Educating users about social engineering and phishing techniques.
 
 ---
 
-## 📬 Questions or Improvements?
+## ⚖️ Ethical Use
 
-Feel free to open an **Issue** or **Pull Request** – but only for educational enhancements (e.g., better UI, more comments, traffic analysis tips). No requests to turn this into a real phishing tool will be answered.
+Use this repository only for defensive, educational, and authorized testing.
 
-**Stay safe, enable 2FA, and never trust “free Premium” links!** 🔐
-`
+- Do not use it to target real people.
+- Do not deploy it on the public internet.
+- Do not connect it to Telegram’s real APIs.
+- Do not use it without explicit permission from the environment owner.
+
+The author is not responsible for misuse.
+
+---
+
+## 📄 License
+
+This repository does not currently include a `LICENSE` file.
+
+- If you plan to share or publish this project, add a license that matches your intended usage.
+- Until a license is added, the repository should be treated as proprietary content.
+
+If you want, I can help draft a small permissive or ethical license file for this project.
