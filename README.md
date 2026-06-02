@@ -3,7 +3,7 @@
 **DO NOT USE THIS CODE FOR ILLEGAL ACTIVITIES.**
 This repository is a simulation built for cybersecurity education, awareness, and authorized lab-based testing only.
 
-![Telegram Phishing Simulation Demo](/assets/screenshot-20260602-202756.png)
+![Telegram Phishing Simulation Demo](public/assets/screenshot-20260602-202756.png)
 
 ---
 
@@ -37,13 +37,13 @@ It shows how attackers can use fake “Free Premium” offers to harvest phone n
 
 | File | Description |
 |------|-------------|
-| `index.html` | Phishing page UI used for the simulation. |
+| `public/index.html` | Phishing page UI used for the simulation. |
+| `public/assets/` | Supporting static assets used by the demo page. |
 | `server.js` | Mock backend that logs submitted values locally. |
 | `package.json` | Node project metadata and dependencies. |
 | `README.md` | Project documentation. |
 | `LICENSE` | Project license terms. |
 | `.gitignore` | Files and directories excluded from Git tracking. |
-| `assets/` | Supporting static assets used by the demo page. |
 
 ---
 
