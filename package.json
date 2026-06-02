@@ -10,5 +10,5 @@
     "express": "^4.18.2"
   },
   "author": "Matyas Abreham",
-  "license": "CC-BY-NC-4.0"
+  "license": "MIT"
 }
