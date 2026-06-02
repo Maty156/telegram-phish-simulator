@@ -1,0 +1,14 @@
+{
+  "name": "telegram-phish-simulator",
+  "version": "1.0.0",
+  "description": "Educational simulation of Telegram phishing attack",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "author": "Your Name",
+  "license": "CC-BY-NC-4.0"
+}
