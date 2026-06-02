@@ -9,34 +9,49 @@ const logFilePath = path.join(__dirname, 'stolen_credentials.log');
 // ============================================
 const logo = `
 \x1b[1;32m
-               ______
-            .-'      '-.
-           /            \\
-          |              |
-          |,  .-.  .-.  ,|
-          | )(__/  \\__)( |
-          |/     /\\     \\
-          (_     ^^     _)
-           \\__|IIIIII|__/
-            | \\IIIIII/ |
-            \\          /
-             '--------'
+███▄ ▄███▓ ▄▄▄       ▄▄▄█████▓ ██▓ ██▒   █▓ ▄▄▄        ██████
+▓██▒▀█▀ ██▒▒████▄     ▓  ██▒ ▓▒▓██▒▓██░   █▒▒████▄    ▒██    ▒
+▓██    ▓██░▒██  ▀█▄   ▒ ▓██░ ▒░▒██▒ ▓██  █▒░▒██  ▀█▄  ░ ▓██▄
+▒██    ▒██ ░██▄▄▄▄██  ░ ▓██▓ ░ ░██░  ▒██ █░░░██▄▄▄▄██   ▒   ██▒
+▒██▒   ░██▒ ▓█   ▓██▒   ▒██▒ ░ ░██░   ▒▀█░   ▓█   ▓██▒▒██████▒▒
+░ ▒░   ░  ░ ▒▒   ▓▒█░   ▒ ░░   ░▓     ░ ▐░   ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░
+░  ░      ░  ▒   ▒▒ ░     ░     ▒ ░   ░ ░░    ▒   ▒▒ ░░ ░▒  ░ ░
+░      ░     ░   ▒      ░       ▒ ░     ░░    ░   ▒   ░  ░  ░
+       ░         ░  ░           ░        ░        ░  ░      ░
+                                        ░
 
-███╗   ███╗ █████╗ ███████╗██╗   ██╗
-████╗ ████║██╔══██╗██╔════╝██║   ██║
-██╔████╔██║███████║███████╗██║   ██║
-██║╚██╔╝██║██╔══██║╚════██║██║   ██║
-██║ ╚═╝ ██║██║  ██║███████║╚██████╔╝
-╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝ ╚═════╝
 \x1b[0m
 `;
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function displayLoadingSequence() {
+    const lines = [
+        '║ [+] Loading modules...',
+        '║ [+] Initializing framework...',
+        '║ [+] Verifying environment...',
+        '║ [+] System ready.'
+    ];
+    
+    console.log('\x1b[1;32m╔══════════════════════════════════════════════════════════════╗');
+    console.log('║                  ELITE RED TEAM CONSOLE                     ║');
+    console.log('║                     OPERATOR ACCESS                         ║');
+    console.log('╠══════════════════════════════════════════════════════════════╣\x1b[0m');
+    
+    for (const line of lines) {
+        console.log('\x1b[1;32m' + line + ' '.repeat(62 - line.length) + '║\x1b[0m');
+        await sleep(300);
+    }
+    
+    console.log('\x1b[1;32m╚══════════════════════════════════════════════════════════════╝\x1b[0m');
+}
+
 const footer = `
 \x1b[1;32m---------------------------------------------------------\n          POWERED BY MASU - CYBER LAB EDITION          \n---------------------------------------------------------\n\x1b[0m
 `;
-
-const warning = `
-\x1b[1;32m---------------------------------------------------------\n          INITIALIZING MALICIOUS MATRIX DEPLOYMENT       \n---------------------------------------------------------\n\x1b[0m
-`;
+const warning = ``;
 
 function appendLog(line) {
     const timestamp = new Date().toISOString();
@@ -77,10 +92,10 @@ app.post('/api/verify-2fa', (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
     console.clear();
     console.log(logo);
-    console.log(warning);
+    await displayLoadingSequence();
     console.log(`\x1b[32m✓ Server running on http://localhost:${PORT}\x1b[0m`);
     console.log(`\x1b[36m✓ Open the page in your browser at http://<attacker-ip>:${PORT}\x1b[0m\n`);
     console.log(footer);
