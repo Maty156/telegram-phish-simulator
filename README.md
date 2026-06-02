@@ -88,12 +88,12 @@ npm install
 
 1. Start the mock server on the attacker VM:
    ```bash
-   node server.js
+   npm start
    ```
 
 2. From the victim VM, open the phishing page in a browser:
    ```text
-   http://\<attacker-ip\>/
+   http://<attacker-ip>:3000/
    ```
 
 3. Use the page to submit a phone number, verification code, and optional password.
