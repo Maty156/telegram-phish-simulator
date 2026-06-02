@@ -41,8 +41,9 @@ It shows how attackers can use fake “Free Premium” offers to harvest phone n
 | `server.js` | Mock backend that logs submitted values locally. |
 | `package.json` | Node project metadata and dependencies. |
 | `README.md` | Project documentation. |
-| `LICENSE` | License and ethical usage terms. |
-| `.gitignore` | Files excluded from version control. |
+| `LICENSE` | Project license terms. |
+| `.gitignore` | Files and directories excluded from Git tracking. |
+| `assets/` | Supporting static assets used by the demo page. |
 
 ---
 
@@ -148,9 +149,9 @@ The author is not responsible for misuse.
 
 ## 📄 License
 
-This repository does not currently include a `LICENSE` file.
+This project is licensed under the MIT License. See the included `LICENSE` file for full terms.
 
-- If you plan to share or publish this project, add a license that matches your intended usage.
-- Until a license is added, the repository should be treated as proprietary content.
+- This license allows reuse, modification, and distribution.
+- It does not provide any warranty.
 
-If you want, I can help draft a small permissive or ethical license file for this project.
+Use this repository only for educational, defensive, and authorized testing.
