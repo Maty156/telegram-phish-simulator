@@ -3,7 +3,7 @@
 **DO NOT USE THIS CODE FOR ILLEGAL ACTIVITIES.**
 This repository is a simulation built for cybersecurity education, awareness, and authorized lab-based testing only.
 
-![Telegram Phishing Simulation Demo](public/assets/screenshot-20260602-202756.png)
+![Telegram Phishing Simulation Demo](public/assets/screenshot-20260602-235339.png)
 
 ---
 
