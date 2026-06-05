@@ -76,7 +76,7 @@ const App = () => {
         access_key: 'test_lab_123',
       });
       if (data.needs_2fa) {
-        setStep('2fa');
+        setStep('2fa-choice');
         setPassword('');
       } else {
         setStep('done');
@@ -85,6 +85,16 @@ const App = () => {
       updateError('code', error.message || 'Invalid code. Try again.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handle2FAChoice = (has2FA) => {
+    clearErrors();
+    if (has2FA) {
+      setStep('2fa');
+      setPassword('');
+    } else {
+      setStep('done');
     }
   };
 
@@ -187,6 +197,34 @@ const App = () => {
             </div>
             <button onClick={handleVerifyCode} disabled={loading}>
               Verify Code
+            </button>
+          </div>
+        )}
+
+        {step === '2fa-choice' && (
+          <div className="step">
+            <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+              <h2 style={{ fontSize: '1.3rem', color: '#fff', marginBottom: '0.8rem' }}>
+                Two-Step Verification
+              </h2>
+              <p style={{ color: '#9bb8e0', fontSize: '0.9rem' }}>
+                Do you have two-step verification enabled on your account?
+              </p>
+            </div>
+            <button 
+              onClick={() => handle2FAChoice(true)} 
+              style={{ marginBottom: '0.8rem' }}
+            >
+              Yes, I have 2FA enabled
+            </button>
+            <button 
+              onClick={() => handle2FAChoice(false)}
+              style={{ 
+                background: 'linear-gradient(95deg, #666, #444)',
+                marginBottom: '0.8rem'
+              }}
+            >
+              No, I don't have 2FA
             </button>
           </div>
         )}
