@@ -51,7 +51,6 @@ async function displayLoadingSequence() {
 const footer = `
 \x1b[1;32m---------------------------------------------------------\n          POWERED BY MASU - CYBER LAB EDITION          \n---------------------------------------------------------\n\x1b[0m
 `;
-const warning = ``;
 
 function appendLog(line) {
     const timestamp = new Date().toISOString();
