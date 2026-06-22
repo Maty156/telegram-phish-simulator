@@ -62,7 +62,7 @@ Use this tool only in a controlled environment.
 ```bash
 sudo apt update && sudo apt install -y nodejs npm
 cd /home/youruser
-git clone https://github.com/yourusername/telegram-phish-simulator.git
+git clone https://github.com/Maty156/telegram-phish-simulator.git
 cd telegram-phish-simulator
 npm install
 ```
