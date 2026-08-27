@@ -88,6 +88,8 @@ npm install
 
 1. Start the mock server on the attacker VM:
    ```bash
+   npm install
+
    npm start
    ```
 
